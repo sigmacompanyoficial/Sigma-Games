@@ -1,10 +1,14 @@
 🎮 Sigma Games
+
 Bienvenido a Sigma Games – una plataforma web diseñada para brindarte una colección de juegos simples, divertidos y adictivos, todo en un solo lugar. Ya sea que busques pasar el rato, competir con amigos o simplemente probar tus reflejos, Sigma Games tiene algo para ti.
 
+
 🔗 Explora la plataforma aquí:
+
 👉 https://sigmagames23.github.io/Sigma-Games/
 
 🕹️ ¿Qué es Sigma Games?
+
 Sigma Games es una página web que reúne distintos mini-juegos desarrollados en HTML, CSS y JavaScript. El objetivo principal del proyecto es ofrecer una experiencia divertida, accesible y gratuita para todo tipo de público. No necesitas registrarte, no hay anuncios invasivos, solo entra y juega.
 
 Ya sea que tengas cinco minutos o una hora, Sigma Games está diseñado para que disfrutes del tiempo que pasas jugando.
