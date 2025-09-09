@@ -1,0 +1,524 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGMA GAMES | Penalty Challenge - Juega Gratis Online</title>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZKNGQZL45"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PZKNGQZL45');
+  </script>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Juega Penalty Challenge gratis online en Sigma Games. El mejor sitio de juegos sin descargas ni registros. ¡Diversión garantizada!" />
+  <meta name="keywords" content="Penalty Challenge, juegos online, juegos gratis, sigma games, jugar online" />
+  <meta name="author" content="Sigma Games" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="SIGMA GAMES | Penalty Challenge - Juega Gratis Online" />
+  <meta property="og:description" content="Juega Penalty Challenge gratis online en Sigma Games. El mejor sitio de juegos sin descargas ni registros." />
+  <meta property="og:image" content="Fotos/juegos066.jpg" />
+  <meta property="og:url" content="https://sigmagames.ct.ws/penalty.challenge.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="SIGMA GAMES | Penalty Challenge - Juega Gratis Online" />
+  <meta name="twitter:description" content="Juega Penalty Challenge gratis online en Sigma Games." />
+  <meta name="twitter:image" content="Fotos/juegos066.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Fotos/Logo sigma company pequeñopeg.jpeg" />
+  
+  <!-- Librerías para Sigma AI -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emoji-toolkit@11.5.0/lib/js/joypixels.min.js"></script>
+  <script src="https://js.puter.com/v2/"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .home-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .home-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .game-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      gap: 1rem;
+    }
+
+    .game-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-frame-container {
+      position: relative;
+      flex: 1;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-frame {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 15px;
+    }
+
+    .fullscreen-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      border: none;
+      color: #fff;
+      padding: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .fullscreen-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+      transform: scale(1.1);
+    }
+
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #fff;
+      font-size: 1.2rem;
+      z-index: 5;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Sigma AI Styles */
+    #sigma-logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    #sigma-logo:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    #sigma-chatbox {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      display: none;
+      flex-direction: column;
+      z-index: 999;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    #sigma-chatbox.open {
+      display: flex;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #sigma-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 15px 15px 0 0;
+      font-weight: bold;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    #sigma-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .sigma-message {
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    .sigma-user-message {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .sigma-ai-message {
+      background: rgba(0, 0, 0, 0.1);
+      color: #333;
+      margin-right: auto;
+    }
+
+    #sigma-input-box {
+      display: flex;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 0 0 15px 15px;
+    }
+
+    #sigma-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      margin-right: 10px;
+      outline: none;
+    }
+
+    #sigma-send {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    #sigma-send:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        padding: 1rem;
+      }
+      
+      .game-container {
+        padding: 1rem;
+      }
+      
+      .game-title {
+        font-size: 1.5rem;
+      }
+      
+      .game-frame {
+        height: 400px;
+      }
+      
+      #sigma-chatbox {
+        width: 300px;
+        height: 400px;
+        right: 10px;
+        bottom: 80px;
+      }
+      
+      #sigma-logo {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <a href="index.html" class="logo">
+      <img src="Fotos/Logo sigma company pequeñopeg.jpeg" alt="Sigma Games">
+      <span>SIGMA GAMES</span>
+    </a>
+    <a href="index.html" class="home-btn">🏠 Inicio</a>
+  </div>
+
+  <!-- Game Container -->
+  <div class="game-container">
+    <h1 class="game-title">Penalty Challenge</h1>
+    
+    <div class="game-frame-container">
+      <div class="loading-overlay" id="loading">
+        <div class="spinner"></div>
+        <div>Cargando Penalty Challenge...</div>
+      </div>
+      
+      <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Pantalla completa">
+        ⛶
+      </button>
+      
+      <iframe 
+        id="gameFrame"
+        class="game-frame" 
+        src="https://old.sigmagames.ct.ws/penalty-challenge"
+        allowfullscreen
+        onload="hideLoading()">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Sigma AI Logo -->
+  <div id="sigma-logo">Σ</div>
+
+  <!-- Sigma AI Chatbox -->
+  <div id="sigma-chatbox">
+    <div id="sigma-header">Σ Sigma AI - Asistente de Penalty Challenge</div>
+    <div id="sigma-messages"></div>
+    <div id="sigma-input-box">
+      <input type="text" id="sigma-input" placeholder="Escribe un mensaje...">
+      <button id="sigma-send">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    // Loading functionality
+    function hideLoading() {
+      const loading = document.getElementById('loading');
+      if (loading) {
+        loading.style.display = 'none';
+      }
+    }
+
+    // Fullscreen functionality
+    function toggleFullscreen() {
+      const gameFrame = document.getElementById('gameFrame');
+      if (gameFrame.requestFullscreen) {
+        gameFrame.requestFullscreen();
+      } else if (gameFrame.webkitRequestFullscreen) {
+        gameFrame.webkitRequestFullscreen();
+      } else if (gameFrame.msRequestFullscreen) {
+        gameFrame.msRequestFullscreen();
+      }
+    }
+
+    // Sigma AI functionality
+    const sigmaLogo = document.getElementById('sigma-logo');
+    const sigmaChatbox = document.getElementById('sigma-chatbox');
+    const sigmaMessages = document.getElementById('sigma-messages');
+    const sigmaInput = document.getElementById('sigma-input');
+    const sigmaSend = document.getElementById('sigma-send');
+
+    sigmaLogo.addEventListener('click', () => {
+      sigmaChatbox.classList.toggle('open');
+      if (sigmaChatbox.classList.contains('open')) {
+        sigmaInput.focus();
+      }
+    });
+
+    function addSigmaMessage(message, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'sigma-message ' + (isUser ? 'sigma-user-message' : 'sigma-ai-message');
+      
+      if (isUser) {
+        messageDiv.innerHTML = '<strong>Tú:</strong> ' + message;
+      } else {
+        let processedMessage = message;
+        if (typeof joypixels !== 'undefined') {
+          processedMessage = joypixels.toImage(message);
+        }
+        messageDiv.innerHTML = '<strong>Sigma AI:</strong> ' + processedMessage;
+      }
+      
+      sigmaMessages.appendChild(messageDiv);
+      sigmaMessages.scrollTop = sigmaMessages.scrollHeight;
+    }
+
+    async function sendSigmaMessage() {
+      const msg = sigmaInput.value.trim();
+      if (!msg) return;
+      
+      addSigmaMessage(msg, true);
+      sigmaInput.value = "";
+      
+      const typingDiv = document.createElement("div");
+      typingDiv.className = "sigma-message sigma-ai-message";
+      typingDiv.innerHTML = "<strong>Sigma AI:</strong> <em>Escribiendo...</em> 💭";
+      sigmaMessages.appendChild(typingDiv);
+      sigmaMessages.scrollTop = sigmaMessages.scrollHeight;
+      
+      try {
+        if (typeof puter === 'undefined') {
+          throw new Error('Puter SDK no está cargado');
+        }
+        
+        const response = await puter.ai.chat(msg, { 
+          model: "gpt-4o-mini",
+          system_prompt: "Eres Sigma AI, un asistente inteligente especializado en Penalty Challenge y Sigma Games. Ayuda a los usuarios con información sobre este juego, consejos, trucos, controles y responde preguntas generales. Responde en español, usa emojis y sé amigable. Conoces todos los aspectos de Penalty Challenge."
+        });
+        
+        sigmaMessages.removeChild(typingDiv);
+        addSigmaMessage(response);
+        
+      } catch (error) {
+        console.error('Error en Sigma AI:', error);
+        sigmaMessages.removeChild(typingDiv);
+        addSigmaMessage("⚠️ Lo siento, no puedo conectarme en este momento. Intenta de nuevo más tarde. 🤖");
+      }
+      
+      sigmaLogo.classList.add("pulse");
+      setTimeout(() => sigmaLogo.classList.remove("pulse"), 1000);
+    }
+    
+    sigmaSend.addEventListener("click", sendSigmaMessage);
+    sigmaInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendSigmaMessage();
+      }
+    });
+    
+    // Welcome message
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        addSigmaMessage("¡Hola! 👋 Soy Sigma AI, tu asistente para Penalty Challenge. ¿Necesitas ayuda con controles, trucos o tienes alguna pregunta sobre el juego? 💬🎮🕹️ ✨");
+      }, 2000);
+    });
+
+    // Anti-inspection protection (optional)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+          (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+          (e.ctrlKey && e.key === 'U')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+  </script>
+</body>
+</html>

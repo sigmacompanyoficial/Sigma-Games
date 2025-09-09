@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google Analytics -->
+  
+  
+  
+  
+    
+    
+  </div>
+  
+  
+  
+    
+    
+  </div>
+  
+  <div id="sigma-logo">Î£</div>
+  <div id="sigma-chatbox">
+    <div id="sigma-header">Î£ Sigma AI Beta</div>
+    <div id="sigma-messages"></div>
+    <div id="sigma-input-box">
+      <input type="text" id="sigma-input" placeholder="Escribe un mensaje...">
+      <button id="sigma-send">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    const sigmaLogo = document.getElementById('sigma-logo');
+    const sigmaChatbox = document.getElementById('sigma-chatbox');
+    const sigmaMessages = document.getElementById('sigma-messages');
+    const sigmaInput = document.getElementById('sigma-input');
+    const sigmaSend = document.getElementById('sigma-send');
+
+    sigmaLogo.addEventListener('click', () => {
+      sigmaChatbox.classList.toggle('open');
+    });
+
+    function addSigmaMessage(sender, message, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'sigma-message ' + (isUser ? 'sigma-user-message' : 'sigma-ai-message');
+      
+      if (isUser) {
+        messageDiv.innerHTML = '<strong>Tu:</strong> ' + message;
+      } else {
+        let processedMessage = message;
+        if (typeof joypixels !== 'undefined') {
+          processedMessage = joypixels.toImage(message);
+        }
+        messageDiv.innerHTML = '<strong>Sigma AI:</strong> ' + processedMessage;
+      }
+      
+      sigmaMessages.appendChild(messageDiv);
+      sigmaMessages.scrollTop = sigmaMessages.scrollHeight;
+    }
+
+    async function sendSigmaMessage() {
+      const msg = sigmaInput.value.trim();
+      if (!msg) return;
+      
+      addSigmaMessage("", msg, true);
+      sigmaInput.value = "";
+      
+      const typingDiv = document.createElement("div");
+      typingDiv.className = "sigma-message sigma-ai-message";
+      typingDiv.innerHTML = "<strong>Sigma AI:</strong> <em>Escribiendo...</em> ðŸ’­";
+      sigmaMessages.appendChild(typingDiv);
+      sigmaMessages.scrollTop = sigmaMessages.scrollHeight;
+      
+      try {
+        if (typeof puter === 'undefined') {
+          throw new Error('Puter SDK no esta cargado');
+        }
+        
+        const response = await puter.ai.chat(msg, { 
+          model: "gpt-4o-mini",
+          system_prompt: "Eres Sigma AI, un asistente inteligente especializado en Sigma Games. Ayuda a los usuarios con informacion sobre juegos, consejos de juego, y responde preguntas generales. Responde en espaÃ±ol, usa emojis y se amigable."
+        });
+        
+        sigmaMessages.removeChild(typingDiv);
+        addSigmaMessage("", response);
+        
+      } catch (error) {
+        console.error('Error en Sigma AI:', error);
+        sigmaMessages.removeChild(typingDiv);
+        addSigmaMessage("", "âš ï¸ Lo siento, no puedo conectarme en este momento. Intenta de nuevo mas tarde. ðŸ¤–");
+      }
+      
+      sigmaLogo.classList.add("pulse");
+      setTimeout(() => sigmaLogo.classList.remove("pulse"), 1000);
+    }
+    
+    sigmaSend.addEventListener("click", sendSigmaMessage);
+    sigmaInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendSigmaMessage();
+      }
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        addSigmaMessage("", "Â¡Hola! ðŸ‘‹ Soy Sigma AI, tu asistente para Sigma Games. Â¿Necesitas ayuda con este juego o tienes alguna pregunta? ðŸ’¬ðŸŽ®ðŸ•¹ï¸ âœ¨");
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
+
+
+
