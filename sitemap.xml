@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.sigmagames.ct.ws/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Listado básico de páginas de juego. Puedes regenerarlo automáticamente más tarde. -->
+  <url><loc>https://www.sigmagames.ct.ws/agar.io.html</loc></url>
+  <url><loc>https://www.sigmagames.ct.ws/among.us.html</loc></url>
+  <url><loc>https://www.sigmagames.ct.ws/minecraft.html</loc></url>
+  <url><loc>https://www.sigmagames.ct.ws/mario.64.html</loc></url>
+  <url><loc>https://www.sigmagames.ct.ws/subway.surfers.html</loc></url>
+</urlset>

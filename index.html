@@ -14,6 +14,50 @@
   <link rel="icon" type="image/png" href="Fotos/Logo sigma company pequeñopeg.jpeg" />
   <link rel="stylesheet" href="styles.css" />
   <meta name="theme-color" content="#0f0f12" />
+  <!-- SEO básico -->
+  <meta name="description" content="Sigma Games: juega gratis a los mejores juegos online. Nuevos juegos cada semana. Rápido, sin registros y sin líos." />
+  <meta name="keywords" content="juegos, juegos online, juegos gratis, friv, minijuegos, sigma games" />
+  <link rel="canonical" href="https://www.sigmagames.ct.ws/" />
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sigma Games" />
+  <meta property="og:title" content="Sigma Games | Juega gratis online" />
+  <meta property="og:description" content="Más de 100 juegos gratis. Rápidos, optimizados y sin registros." />
+  <meta property="og:image" content="https://www.sigmagames.ct.ws/Fotos/Logo%20SIgmaGames%20oficial.jpg" />
+  <meta property="og:url" content="https://www.sigmagames.ct.ws/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://js.puter.com" crossorigin>
+  <link rel="preload" as="image" href="Fotos/Fondo pantalla.jpg" imagesrcset="Fotos/Fondo pantalla.jpg 1x" />
+  <!-- Robots y PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Sigma Games",
+    "url": "https://www.sigmagames.ct.ws/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.sigmagames.ct.ws/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Sigma Company",
+      "sameAs": [
+        "https://instagram.com/sigmacompanyoficial",
+        "https://www.youtube.com/@sigmacompanyoficial",
+        "https://www.tiktok.com/@sigmacompanyoficial",
+        "https://x.com/sigmacompanyoficial",
+        "https://github.com/sigmacompanyoficial"
+      ]
+    }
+  }
+  </script>
   <style>
     /* Estilos base */
 * { box-sizing: border-box; }
@@ -128,32 +172,30 @@ body {
 }
 
 /* Galería */
-/* Grid clásico: 6 por fila en escritorio */
+:root {
+  --tile-min: 140px; /* controlado por el slider de ajustes y auto-escala */
+  --tile-radius: 14px;
+}
 .gallery {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(var(--tile-min), 1fr));
+  gap: 14px;
   padding: 12px 16px 16px;
-  max-width: 1600px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
-/* Responsive breakpoints */
-@media (max-width: 1600px) { .gallery { grid-template-columns: repeat(5, 1fr); } }
-@media (max-width: 1280px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 980px)  { .gallery { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 680px)  { .gallery { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 420px)  { .gallery { grid-template-columns: 1fr; } }
+/* Quita los breakpoints fijos: el auto-fit ya cubre responsive; mantenemos uno para móviles muy pequeños */
+@media (max-width: 420px) { .gallery { grid-template-columns: 1fr; } }
 
 /* Top juegos: sin efecto especial ahora */
 #gallery-top { }
 
 .card {
   position: relative;
-  border: 1px solid #22252a;
-  border-radius: 10px;
+  border-radius: var(--tile-radius);
   overflow: hidden;
-  background: #14161c;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
   display: block;
@@ -163,15 +205,37 @@ body {
   animation: fadeInScale 0.55s ease both; /* animación de entrada */
   animation-delay: var(--delay, 0s);
 }
+/* Borde tipo resplandor como la imagen, con doble capa */
+.card::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  padding: 2px; /* grosor del borde */
+  background: radial-gradient(120% 120% at 0% 0%, #7d3cff, transparent 40%),
+              radial-gradient(120% 120% at 100% 0%, #00d4ff, transparent 40%),
+              radial-gradient(120% 120% at 0% 100%, #ff8a00, transparent 40%),
+              radial-gradient(120% 120% at 100% 100%, #00ff85, transparent 40%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude; /* crea sólo el borde */
+  pointer-events: none;
+  opacity: .8;
+  transition: opacity .2s ease;
+}
+.card:hover::before { opacity: 1; }
 .card:focus-visible { outline: 2px solid #6ea4ff; outline-offset: 2px; }
-.card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(0,0,0,0.45); }
+
 
 .card img {
   display: block;
   width: 100%;
-  height: auto; /* usa proporción natural de la imagen */
-  object-fit: contain; /* sin recortes */
-  background: #0e1117; /* fondo si hay bandas */
+  aspect-ratio: 1 / 1; /* cuadradas como en la imagen que mandaste */
+  object-fit: cover; /* recorta para llenar el cuadro */
+  background: #0e1117;
+  border-radius: calc(var(--tile-radius) - 2px);
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -593,6 +657,31 @@ body {
       }
     }
 
+    /* Ajustes de cuadrícula y aspecto de miniaturas tipo "friv" */
+    :root { --tile-min: 140px; --tile-radius: 14px; }
+    .gallery { grid-template-columns: repeat(auto-fit, minmax(var(--tile-min), 1fr)); gap: 14px; }
+    .card { aspect-ratio: 1/1; padding: 8px; border-radius: var(--tile-radius); background: radial-gradient(120% 120% at 50% 50%, #14161c 40%, #171a22 100%); box-shadow: 0 8px 16px rgba(0,0,0,.25); }
+    .card img { width: 88%; height: 88%; object-fit: contain; margin: auto; border-radius: 12px; background: #0e1117; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.04), 0 4px 12px rgba(0,0,0,.35); }
+    .card { position: relative; }
+    .card::before { content: ""; position: absolute; inset: 0; border-radius: var(--tile-radius); padding: 2px; background: linear-gradient(135deg, rgba(123,97,255,.8), rgba(64,195,255,.8)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .45; transition: opacity .2s ease; }
+    .card:hover::before { opacity: .9; }
+    /* Títulos siempre visibles si se activa la opción */
+    body.titles-fixed .card .title { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    /* Modo alto contraste/neón */
+    body.neon .card::before { opacity: 1; background: linear-gradient(135deg, #7b61ff, #40c3ff, #ff73fa); }
+    /* Reducir animaciones */
+    body.reduce-motion * { animation: none !important; transition: none !important; }
+    /* Panel de ajustes */
+    .settings-trigger { margin-left: 8px; }
+    .settings-panel { position: absolute; right: 16px; top: 56px; background: #14161c; color: #e9e9e9; border: 1px solid #22252a; border-radius: 10px; padding: 12px; width: min(92vw, 360px); box-shadow: 0 10px 30px rgba(0,0,0,.35); display: none; z-index: 10; }
+    .settings-panel.open { display: block; }
+    .settings-panel h3 { margin: 4px 0 8px; font-size: 14px; }
+    .settings-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; margin: 6px 0; }
+    .settings-panel textarea { width: 100%; min-height: 90px; resize: vertical; border-radius: 8px; border: 1px solid #2a2f39; background:#0f1116; color:#e9e9e9; padding:8px; }
+    /* Sección Markdown */
+    .md-section { max-width: 900px; margin: 10px auto; padding: 12px 16px; border: 1px solid #22252a; border-radius: 10px; background: #121318; }
+    .md-section .md-title { font-weight: 700; text-transform: uppercase; font-size: 14px; opacity: .9; margin: 0 0 6px; text-align:center; }
+    .md-content :is(h1,h2,h3) { margin: 8px 0 6px; }
   </style>
 </head>
 <body>
@@ -601,6 +690,7 @@ body {
     <div class="header-left">
       <img class="logo-img" src="Fotos/Logo sigma company pequeñopeg.jpeg" alt="Logo de Sigma Company" />
       <h1 class="logo">Sigma Games</h1>
+      <button class="btn settings-trigger" id="open-settings" aria-controls="settings" aria-expanded="false">⚙️ Ajustes</button>
     </div>
     <div class="language-selector">
       <button id="lang-es" class="lang-btn active" onclick="changeLanguage('es')">🇪🇸 ES</button>
@@ -608,15 +698,37 @@ body {
       <button id="lang-ca" class="lang-btn" onclick="changeLanguage('ca')">🏴󠁥󠁳󠁣󠁴󠁿 CA</button>
     </div>
     <nav class="social" aria-label="Redes">
-      <a href="https://instagram.com/sigmacompanyoficial" target="_blank" rel="noopener">
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2.2A2.8 2.8 0 1 1 12 15a2.8 2.8 0 0 1 0-5.8zM18.5 6a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>
-        @sigmacompanyoficial
+      <a href="https://instagram.com/sigmagamesoficial" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+        <img src="Fotos/juegos031.jpg" alt="Instagram" style="height:24px;width:24px;border-radius:4px;vertical-align:middle;"> IG
       </a>
-      <a href="https://github.com/sigmacompanyoficial" target="_blank" rel="noopener">
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.7 1.9 2.8 1.4.1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-5.7 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.4 1.2a11.7 11.7 0 0 1 6.2 0c2.4-1.5 3.4-1.2 3.4-1.2.6 1.7.2 3 .1 3.3.8.9 1.2 2 1.2 3.3 0 4.4-2.8 5.4-5.4 5.7.4.4.8 1.1.8 2.2v3.2c0 .5.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>
-        @sigmagames23
+      <a href="https://github.com/sigmacompanyoficial" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+        <img src="Fotos/juegos112.png" alt="GitHub" style="height:24px;width:24px;border-radius:4px;vertical-align:middle;"> GitHub
       </a>
     </nav>
+    <div class="settings-panel" id="settings" role="dialog" aria-label="Ajustes rápidos">
+      <h3>Opciones rápidas</h3>
+      <div class="settings-row">
+        <label for="tile-size">Tamaño de miniaturas</label>
+        <input type="range" id="tile-size" min="100" max="220" step="10" value="140" />
+      </div>
+      <div class="settings-row">
+        <label><input type="checkbox" id="toggle-titles" /> Mostrar títulos siempre</label>
+      </div>
+      <div class="settings-row">
+        <label><input type="checkbox" id="toggle-neon" /> Modo neón</label>
+      </div>
+      <div class="settings-row">
+        <label><input type="checkbox" id="toggle-reduce" /> Reducir animaciones</label>
+      </div>
+      <div class="settings-row" style="grid-template-columns:1fr;">
+        <label for="md-input">Bloque Markdown (aparece debajo):</label>
+        <textarea id="md-input" placeholder="Escribe Markdown aquí...">**Bienvenido a Sigma Games**
+- Juegos nuevos cada semana
+- Soporte 24/7
+</textarea>
+        <button class="btn btn-primary" id="render-md">Renderizar</button>
+      </div>
+    </div>
   </header>
 
   <main>
@@ -629,6 +741,91 @@ body {
      <section class="info" aria-label="Información">
       <p id="welcome-text">Bienvenido a Sigma Games, la mejor página de juegos en línea donde la diversión nunca termina. Explora nuestra amplia selección de juegos emocionantes y desafiantes, desde aventuras épicas hasta rompecabezas ingeniosos. ¡Únete a nuestra comunidad de jugadores y descubre por qué somos la elección número uno para los amantes de los juegos en línea!</p>
     </section> 
+
+    <section class="md-section" aria-label="Notas">
+      <div class="md-title">Notas y anuncios</div>
+      <div id="md-output" class="md-content"></div>
+    </section>
+
+    <script>
+      // Ajustes tontos pero útiles: tamaño de miniaturas, títulos visibles, neón, reducir animaciones y markdown
+      document.addEventListener('DOMContentLoaded', () => {
+        const root = document.documentElement;
+        const body = document.body;
+        const btn = document.getElementById('open-settings');
+        const panel = document.getElementById('settings');
+        const range = document.getElementById('tile-size');
+        const chkTitles = document.getElementById('toggle-titles');
+        const chkNeon = document.getElementById('toggle-neon');
+        const chkReduce = document.getElementById('toggle-reduce');
+        const mdInput = document.getElementById('md-input');
+        const mdOut = document.getElementById('md-output');
+        const mdBtn = document.getElementById('render-md');
+
+        // Cargar preferencias guardadas
+        const prefs = JSON.parse(localStorage.getItem('sigmaPrefs')||'{}');
+        if (prefs.tileMin) root.style.setProperty('--tile-min', prefs.tileMin);
+        if (prefs.titles) body.classList.toggle('titles-fixed', !!prefs.titles);
+        if (prefs.neon) body.classList.toggle('neon', !!prefs.neon);
+        if (prefs.reduce) body.classList.toggle('reduce-motion', !!prefs.reduce);
+        if (prefs.md && mdInput) mdInput.value = prefs.md;
+
+        // Sincroniza controles
+        const parsePx = v => parseInt(String(v).replace('px',''),10);
+        const currentMin = getComputedStyle(root).getPropertyValue('--tile-min').trim() || '140px';
+        if (range) range.value = parsePx(currentMin) || 140;
+
+        const save = () => {
+          localStorage.setItem('sigmaPrefs', JSON.stringify({
+            tileMin: getComputedStyle(root).getPropertyValue('--tile-min').trim(),
+            titles: body.classList.contains('titles-fixed'),
+            neon: body.classList.contains('neon'),
+            reduce: body.classList.contains('reduce-motion'),
+            md: mdInput?.value || ''
+          }));
+        };
+
+        // Toggle panel
+        btn?.addEventListener('click', () => {
+          const open = panel.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(open));
+        });
+
+        // Range – cambia tamaño mínimo de la cuadrícula
+        range?.addEventListener('input', e => {
+          const v = e.target.value + 'px';
+          root.style.setProperty('--tile-min', v);
+        });
+        range?.addEventListener('change', save);
+
+        // Checkboxes
+        chkTitles?.addEventListener('change', e => { body.classList.toggle('titles-fixed', e.target.checked); save(); });
+        chkNeon?.addEventListener('change', e => { body.classList.toggle('neon', e.target.checked); save(); });
+        chkReduce?.addEventListener('change', e => { body.classList.toggle('reduce-motion', e.target.checked); save(); });
+
+        // Markdown
+        mdBtn?.addEventListener('click', () => {
+          try {
+            const html = (typeof marked !== 'undefined') ? marked.parse(mdInput.value) : mdInput.value;
+            mdOut.innerHTML = html;
+            save();
+          } catch (e) {
+            mdOut.textContent = mdInput.value;
+          }
+        });
+
+        // Render inicial si había md guardado
+        if (prefs.md && mdBtn) mdBtn.click();
+
+        // Auto-escala según número de juegos
+        const cards = document.querySelectorAll('.gallery .card').length;
+        if (cards > 120) root.style.setProperty('--tile-min', '120px');
+        if (cards > 160) root.style.setProperty('--tile-min', '110px');
+        if (cards > 200) root.style.setProperty('--tile-min', '100px');
+        save();
+      });
+    </script>
+
     <!-- Secciones solicitadas -->
     <section class="section" aria-label="Top juegos">
       <h2 class="section-title">Top juegos</h2>
@@ -833,13 +1030,43 @@ body {
         </a>
                 <a class="card" href="steal.a.brainrot.html" aria-label="Juego 126">
           <img src="Fotos/SAB.jpg" alt="Juego 126">
-          <span class="title">Doge miner</span>
+          <span class="title">Steal a Brainrot</span>
+        </a>
+        </a>
+                <a class="card" href="lab.tube.html" aria-label="Juego 126">
+          <img src="Fotos/lab tube.png" alt="Juego 126">
+          <span class="title">Lab Tube</span>
+        </a>
+        </a>
+                <a class="card" href="firefhigther.pintball.html" aria-label="Juego 126">
+          <img src="Fotos/firefihter.png" alt="Juego 126">
+          <span class="title">Firefhigther Pintball</span>
+        </a>
+        </a>
+                <a class="card" href="little.alchemy.2.html" aria-label="Juego 126">
+          <img src="Fotos/litle.png" alt="Juego 126">
+          <span class="title">Little Alchemy 2</span>
+        </a>
+        </a>
+                <a class="card" href="poopy playtime.html" aria-label="Juego 126">
+          <img src="Fotos/Poppy playtime.jpg" alt="Juego 126">
+          <span class="title">Poopy Playtime</span>
+        </a>
+        </a>
+                <a class="card" href="longcat.html aria-label="Juego 126">
+          <img src="Fotos/longcat.jpg" alt="Juego 126">
+          <span class="title">Long Cat</span>
+        </a>
+        </a>
+                <a class="card" href="shmash.karts.html" aria-label="Juego 126">
+          <img src="Fotos/smash-karts_1x1-cover.png" alt="Juego 126">
+          <span class="title">Smash Karts</span>
         </a>
       </div>
     </section>
 
     <section class="section" aria-label="Nuevos juegos 2">
-      <h2 class="section-title">¡nuevos juegos!</h2>
+      <h2 class="section-title">¡Mas Juegos!</h2>
       <div class="gallery" id="gallery-new-2">
         <a class="card" href="stick.heroes.html" aria-label="Juego 48">
           <img src="Fotos/juegos048.png" alt="Juego 48">
@@ -1164,9 +1391,18 @@ body {
   <footer class="site-footer" aria-label="Pie de página">
     <div class="footer-inner">
       <p>© <span id="cpy-year"></span> Sigma Games. Todos los derechos reservados.</p>
+      <button id="report-btn" class="btn btn-primary" style="margin-left:8px">⚠️ Reportar juego roto</button>
     </div>
     <script>
       (function(){ var y=new Date().getFullYear(); var el=document.getElementById('cpy-year'); if(el) el.textContent=y; })();
+      // Reporte por correo usando mailto (simple, sin backend). Incluye página actual y userAgent.
+      document.getElementById('report-btn')?.addEventListener('click', () => {
+        const page = location.href;
+        const ua = navigator.userAgent;
+        const subject = encodeURIComponent('Reporte de juego roto');
+        const body = encodeURIComponent(`Hola Sigma Games,%0D%0A%0D%0AEl juego no funciona.%0D%0APágina: ${page}%0D%0ANavegador: ${ua}%0D%0ADescribe el problema: `);
+        location.href = `mailto:sigmagames545@gmail.com?subject=${subject}&body=${body}`;
+      });
     </script>
   </footer>
     <div id="sigma-logo">Σ</div>

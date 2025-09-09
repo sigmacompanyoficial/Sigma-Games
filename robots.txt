@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.sigmagames.ct.ws/sitemap.xml
+
+# Crawl-delay opcional si tu hosting lo requiere (descomenta si hace falta)
+# Crawl-delay: 5
