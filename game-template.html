@@ -1,0 +1,131 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google Analytics -->
+  
+  
+  
+  
+    
+    
+  </div>
+  
+  
+  
+    
+    
+  </div>
+  
+  <div id="sigma-logo">Î£</div>
+  <div id="sigma-chatbox">
+    <div id="sigma-header">Î£ Sigma AI Beta</div>
+    <div id="sigma-messages"></div>
+    <div id="sigma-input-box">
+      <input type="text" id="sigma-input" placeholder="Escribe un mensaje...">
+      <button id="sigma-send">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    const sigmaLogo = document.getElementById('sigma-logo');
+    const sigmaChatbox = document.getElementById('sigma-chatbox');
+    const sigmaMessages = document.getElementById('sigma-messages');
+    const sigmaInput = document.getElementById('sigma-input');
+    const sigmaSend = document.getElementById('sigma-send');
+
+    sigmaLogo.addEventListener('click', () => {
+      sigmaChatbox.classList.toggle('open');
+    });
+
+    function addSigmaMessage(sender, message, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'sigma-message ' + (isUser ? 'sigma-user-message' : 'sigma-ai-message');
+      
+      if (isUser) {
+        messageDiv.innerHTML = '<strong>Tu:</strong> ' + message;
+      } else {
+        let processedMessage = message;
+        if (typeof joypixels !== 'undefined') {
+          processedMessage = joypixels.toImage(message);
+        }
+        messageDiv.innerHTML = '<strong>Sigma AI:</strong> ' + processedMessage;
+      }
+      
+      sigmaMessages.appendChild(messageDiv);
+      sigmaMessages.scrollTop = sigmaMessages.scrollHeight;
+    }
+
+    async function sendSigmaMessage() {
+      const msg = sigmaInput.value.trim();
+      if (!msg) return;
+      
+      addSigmaMessage("", msg, true);
+      sigmaInput.value = "";
+      
+      const typingDiv = document.createElement("div");
+      typingDiv.className = "sigma-message sigma-ai-message";
+      typingDiv.innerHTML = "<strong>Sigma AI:</strong> <em>Escribiendo...</em> ðŸ’­";
+      sigmaMessages.appendChild(typingDiv);
+      sigmaMessages.scrollTop = sigmaMessages.scrollHeight;
+      
+      try {
+        if (typeof puter === 'undefined') {
+          throw new Error('Puter SDK no esta cargado');
+        }
+        
+        const response = await puter.ai.chat(msg, { 
+          model: "gpt-4o-mini",
+          system_prompt: "Eres Sigma AI, un asistente inteligente especializado en Sigma Games. Ayuda a los usuarios con informacion sobre juegos, consejos de juego, y responde preguntas generales. Responde en espaÃ±ol, usa emojis y se amigable."
+        });
+        
+        sigmaMessages.removeChild(typingDiv);
+        addSigmaMessage("", response);
+        
+      } catch (error) {
+        console.error('Error en Sigma AI:', error);
+        sigmaMessages.removeChild(typingDiv);
+        addSigmaMessage("", "âš ï¸ Lo siento, no puedo conectarme en este momento. Intenta de nuevo mas tarde. ðŸ¤–");
+      }
+      
+      sigmaLogo.classList.add("pulse");
+      setTimeout(() => sigmaLogo.classList.remove("pulse"), 1000);
+    }
+    
+    sigmaSend.addEventListener("click", sendSigmaMessage);
+    sigmaInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendSigmaMessage();
+      }
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        addSigmaMessage("", "Â¡Hola! ðŸ‘‹ Soy Sigma AI, tu asistente para Sigma Games. Â¿Necesitas ayuda con este juego o tienes alguna pregunta? ðŸ’¬ðŸŽ®ðŸ•¹ï¸ âœ¨");
+      }, 2000);
+    });
+  </script>
+<!-- SIGMA-ADS START -->
+<!-- Social follow & Ad Banner (BOTTOM) -->
+<div id="social-follow" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin:16px auto 8px;padding:6px 10px;border-radius:10px;background:#121318;border:1px solid #2a2f39;max-width:960px;">
+<span style="opacity:.9;">Síguenos:</span>
+<a href="https://instagram.com/sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">Instagram</a>
+<a href="https://www.youtube.com/@sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">YouTube</a>
+<a href="https://www.tiktok.com/@sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">TikTok</a>
+<a href="https://x.com/sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">X</a>
+<a href="https://github.com/sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">GitHub</a>
+</div>
+
+<!-- Banner 728x90 (BOTTOM) -->
+<div id="ad-banner-bottom-728x90" style="display:flex;justify-content:center;align-items:center;margin:8px 0 14px;">
+<script type="text/javascript">
+  atOptions = { 'key' : '6470e6339e4bfdd7daea1a9c47b93130', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+</script>
+<script type="text/javascript" src="//holidaysverbcloseness.com/6470e6339e4bfdd7daea1a9c47b93130/invoke.js"></script>
+</div>
+<!-- SIGMA-ADS END -->
+</body>
+</html>
+
+
+

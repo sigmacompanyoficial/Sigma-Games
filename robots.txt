@@ -1,0 +1,8 @@
+# Robots.txt per https://www.sigmagames.ct.ws/
+# Permet a tots els bots accedir a tot el contingut
+
+User-agent: *
+Disallow:
+
+# Sitemap principal
+Sitemap: https://www.sigmagames.ct.ws/sitemap.xml

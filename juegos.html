@@ -1,0 +1,71 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Todos los juegos | Sigma Games</title>
+  <meta name="description" content="Listado completo de juegos de Sigma Games. Más de 100 juegos gratis, rápidos y sin registros." />
+  <link rel="icon" type="image/png" href="Fotos/Logo sigma company pequeñopeg.jpeg" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body{background:#0f0f12;color:#e9e9e9;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    h1{margin:10px 0 16px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+    .tile{background:#151821;border:1px solid #22252a;border-radius:10px;padding:10px;text-decoration:none;color:#e9e9e9;transition:transform .1s ease,background .15s}
+    .tile:hover{background:#1b1f2a;transform:translateY(-2px)}
+    .small{font-size:12px;color:#bfc5d2}
+  </style>
+</head>
+<body>
+<!-- SIGMA-ADS-TOP START -->
+<div id="ad-banner-top-320x50" style="display:flex;justify-content:center;align-items:center;margin:8px 0;">
+<script type="text/javascript">
+  atOptions = { 'key' : 'dfa22a3670cf79cd19f56b9d24e1a799', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
+</script>
+<script type="text/javascript" src="//holidaysverbcloseness.com/dfa22a3670cf79cd19f56b9d24e1a799/invoke.js"></script>
+</div>
+<!-- SIGMA-ADS-TOP END -->
+  <div class="wrap">
+    <h1>Todos los juegos</h1>
+    <p class="small">Páginas generadas desde el sitemap. Haz clic para jugar.</p>
+    <div id="games" class="grid" role="list"></div>
+  </div>
+  <script>
+  (function(){
+    const list = [
+      // Rellenado desde sitemap.xml (extracto)
+      "buckshoot.roulete.html","tiny.fishing.html","bit.life.html","cookie.cliker.html","shell.shockers.html","happy.wheels.html","escape.road.2.html","drive.mad.html","escape.road.city.2.html","racing.limits.html","monkey.mart.html","snow.rider.3d.html","eggy.car.html","fifa.09.html","park.out.html","doodle.jump.html","dragon.ball.z.html","moto.x3m.2.html","golf.champions.html","gta.san.andreas.html","space.bar.cliker.html","zombs.royale.html","blumgi.slime.html","moto.x3m.3.html","my.perfect.hotel.html","wheely.3.html","mr.bullet.html","fireboy.and.watergirl.html","mario.64.html","cookie.cliker.2.html","doom.html","wheely.2.html","shortcut.race.html","snail.bob.html","mario.kart.html","vex.x3m.html","doom.2.html","farming.batlles.html","pokecliker.html","idle.restaurant.tycoon.html","sonkey.kong.comntry.3.html","wood.blocks.html","president.simulator.html","pokemon.esmerald.version.html","cliker.heroes.html","crazy.cars.html","golf.physics.html","steal.a.brainrot.html","lab.tube.html","firefhigther.pintball.html","little.alchemy.2.html","poopy playtime.html","shmash.karts.html","stick.heroes.html","crossy.road.html","road.shooter.html","cooking.fast.html","football.random.html","subway.surfers.html","moto.x3m.winter.html","papa.s.freezeria.html","super.star.car.html"
+    ];
+    const names = (f)=> f.replace(/\.html$/, '').replaceAll('.', ' ').replace(/\b\w/g, m=> m.toUpperCase());
+    const root = document.getElementById('games');
+    list.forEach(href=>{
+      const a=document.createElement('a');
+      
+
+a.href=href; a.className='tile'; a.role='listitem'; a.textContent=names(href);
+      root.appendChild(a);
+    });
+  })();
+  </script>
+<!-- SIGMA-ADS START -->
+<!-- Social follow & Ad Banner (BOTTOM) -->
+<div id="social-follow" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin:16px auto 8px;padding:6px 10px;border-radius:10px;background:#121318;border:1px solid #2a2f39;max-width:960px;">
+<span style="opacity:.9;">Síguenos:</span>
+<a href="https://instagram.com/sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">Instagram</a>
+<a href="https://www.youtube.com/@sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">YouTube</a>
+<a href="https://www.tiktok.com/@sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">TikTok</a>
+<a href="https://x.com/sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">X</a>
+<a href="https://github.com/sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">GitHub</a>
+</div>
+
+<!-- Banner 728x90 (BOTTOM) -->
+<div id="ad-banner-bottom-728x90" style="display:flex;justify-content:center;align-items:center;margin:8px 0 14px;">
+<script type="text/javascript">
+  atOptions = { 'key' : '6470e6339e4bfdd7daea1a9c47b93130', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+</script>
+<script type="text/javascript" src="//holidaysverbcloseness.com/6470e6339e4bfdd7daea1a9c47b93130/invoke.js"></script>
+</div>
+<!-- SIGMA-ADS END -->
+</body>
+</html>
