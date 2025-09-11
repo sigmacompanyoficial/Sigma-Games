@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -686,12 +686,17 @@ body {
 </head>
 <body>
 <!-- SIGMA-ADS-TOP START -->
-<div id="ad-banner-top-320x50" style="display:flex;justify-content:center;align-items:center;margin:8px 0;">
-<script type="text/javascript">
-  atOptions = { 'key' : 'dfa22a3670cf79cd19f56b9d24e1a799', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
-</script>
-<script type="text/javascript" src="//holidaysverbcloseness.com/dfa22a3670cf79cd19f56b9d24e1a799/invoke.js"></script>
+<div id="ad-banner-top" class="ad-slot" aria-label="Publicidad">
+  <script type="text/javascript">
+    atOptions = { 'key' : 'dfa22a3670cf79cd19f56b9d24e1a799', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
+  </script>
+  <script type="text/javascript" src="//holidaysverbcloseness.com/dfa22a3670cf79cd19f56b9d24e1a799/invoke.js"></script>
 </div>
+<style>
+  /* Forzar formato banner compacto 320x50 en todas las pantallas */
+  .ad-slot { display:flex; justify-content:center; align-items:center; margin: 6px auto; width:100%; max-width:336px; min-height:50px; overflow:hidden; }
+  .ad-slot iframe, .ad-slot ins, .ad-slot > div { width:320px !important; height:50px !important; max-width:320px !important; max-height:50px !important; }
+</style>
 <!-- SIGMA-ADS-TOP END -->
 	<!-- Mensaje anti-AdBlock -->
 <div id="adblock-message" style="display:none; position:fixed; top:0; left:0; width:100%; background-color:#ffeb3b; color:#000; text-align:center; padding:15px; font-family:Arial,sans-serif; z-index:9999; box-shadow:0 4px 6px rgba(0,0,0,0.2);">
@@ -701,19 +706,36 @@ body {
 </div>
 
 <script>
-  // Creamos un "dummy ad" para ver si se bloquea
-  var adTest = document.createElement('div');
-  adTest.className = 'adsbox';
-  adTest.style.height = '1px';
-  document.body.appendChild(adTest);
-
-  window.setTimeout(function() {
-    if (adTest.offsetHeight === 0) {
-      // AdBlock detectado
-      document.getElementById('adblock-message').style.display = 'block';
+  // Detección robusta de AdBlock: cebo + verificación de slot
+  (function(){
+    function showAdblock(){
+      var msg = document.getElementById('adblock-message');
+      if (msg) msg.style.display = 'block';
     }
-    adTest.remove();
-  }, 100);
+    // 1) Cebo comúnmente bloqueado por listas de filtros
+    var bait = document.createElement('div');
+    bait.className = 'ad adsbox ad-banner ad-unit advertising';
+    bait.style.cssText = 'position:absolute;left:-9999px;width:1px;height:1px;pointer-events:none;';
+    document.body.appendChild(bait);
+
+    setTimeout(function(){
+      try {
+        var cs = window.getComputedStyle ? getComputedStyle(bait) : null;
+        var baitBlocked = !bait || bait.offsetParent === null || bait.offsetHeight === 0 || bait.clientHeight === 0 || (cs && (cs.display === 'none' || cs.visibility === 'hidden'));
+        if (bait && bait.remove) bait.remove();
+        // 2) Comprobar el slot principal si el script externo fue bloqueado
+        var slot = document.getElementById('ad-banner-top');
+        var slotIframe = slot ? slot.querySelector('iframe') : null;
+        var slotTooSmall = slot ? slot.clientHeight < 20 : true;
+        if (baitBlocked || (!slotIframe && slotTooSmall)) {
+          showAdblock();
+        }
+      } catch(e) {
+        // Si algo falla, mostrar por defecto (mejor avisar que fallar en silencio)
+        showAdblock();
+      }
+    }, 600);
+  })();
 </script>
 
   <!-- Cabecera sin menú, con espacio reservado para logo al lado del título -->
@@ -729,7 +751,7 @@ body {
       <button id="lang-ca" class="lang-btn" onclick="changeLanguage('ca')">🏴󠁥󠁳󠁣󠁴U+E007F CA</button>
     </div>
     <nav class="social" aria-label="Redes">
-      <a href="https://instagram.com/sigmagamesoficial" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+      <a href="https://instagram.com/sigmacompanyoficial" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
         <img src="Fotos/juegos031.jpg" alt="Instagram" style="height:24px;width:24px;border-radius:4px;vertical-align:middle;"> IG
       </a>
       <a href="https://github.com/sigmacompanyoficial" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
@@ -875,13 +897,13 @@ body {
     setInterval(fetchActiveUsers, 5000); // actualiza cada 5 segundos
     </script>
     <!-- Secciones solicitadas -->
-    <div style="text-align: center; margin: 20px 0;">
+    <div id="ad-banner-mid" class="ad-slot" aria-label="Publicidad">
   <script type="text/javascript">
     atOptions = {
       'key' : '6470e6339e4bfdd7daea1a9c47b93130',
       'format' : 'iframe',
-      'height' : 90,
-      'width' : 728,
+      'height' : 50,
+      'width' : 320,
       'params' : {}
     };
   </script>
@@ -1039,7 +1061,7 @@ body {
           <img src="Fotos/juegos031.jpg" alt="Juego 31">
           <span class="title">Doom</span>
         </a>
-	</section>
+	
 		  <div style="text-align: center; margin: 20px 0;">
   <script type="text/javascript">
     atOptions = {
@@ -1052,7 +1074,7 @@ body {
   </script>
   <script type="text/javascript" src="//holidaysverbcloseness.com/6470e6339e4bfdd7daea1a9c47b93130/invoke.js"></script>
 </div>
-      <section class="section" aria-label="Nuevos juegos 2">
+    
         <a class="card" href="wheely.2.html" aria-label="Juego 32">
           <img src="Fotos/juegos032.jpg" alt="Juego 32">
           <span class="title">Wheely 2</span>
@@ -1241,7 +1263,7 @@ body {
           <img src="Fotos/juegos065.jpg" alt="Juego 65">
           <span class="title">Fruit Ninja</span>
         </a>
-	</section>
+
 		  <div style="text-align: center; margin: 20px 0;">
   <script type="text/javascript">
     atOptions = {
@@ -1254,7 +1276,6 @@ body {
   </script>
   <script type="text/javascript" src="//holidaysverbcloseness.com/6470e6339e4bfdd7daea1a9c47b93130/invoke.js"></script>
 </div>
-	  <section class="section" aria-label="Nuevos juegos 2">
 
         <a class="card" href="skibidi.toilet.html" aria-label="Juego 66">
           <img src="Fotos/juegos066.jpg" alt="Juego 66">
@@ -1402,7 +1423,7 @@ ss="card" href="gta.stickman.html" aria-label="Juego 71">
           <img src="Fotos/juegos101.jpg" alt="Juego 101">
           <span class="title">Rocket League</span>
         </a>
-	  </section>
+	  
 		  <div style="text-align: center; margin: 20px 0;">
   <script type="text/javascript">
     atOptions = {
@@ -1416,7 +1437,7 @@ ss="card" href="gta.stickman.html" aria-label="Juego 71">
   <script type="text/javascript" src="//holidaysverbcloseness.com/6470e6339e4bfdd7daea1a9c47b93130/invoke.js"></script>
 </div>
 		  
-<section class="section" aria-label="Nuevos juegos 2">
+
         <a class="card" href="drive.mad-2.html" aria-label="Juego 102">
           <img src="Fotos/juegos102.jpg" alt="Juego 102">
           <span class="title">Drive Mad</span>
