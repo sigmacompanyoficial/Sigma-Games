@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -15,7 +15,7 @@
   </script>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Juega House of Hazards gratis online en Sigma Games. El mejor sitio de juegos sin descargas ni registros. ¡Diversión garantizada!" />
+  <meta name="description" content="Juega House of Hazards gratis online en Sigma Games. El mejor sitio de juegos sin descargas ni registros. Â¡DiversiÃ³n garantizada!" />
   <meta name="keywords" content="House of Hazards, juegos online, juegos gratis, sigma games, jugar online" />
   <meta name="author" content="Sigma Games" />
   <meta name="robots" content="index, follow" />
@@ -35,9 +35,9 @@
   <meta name="twitter:image" content="Fotos/juegos049.jpg" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="Fotos/Logo sigma company pequeñopeg.jpeg" />
+  <link rel="icon" type="image/png" href="Fotos/Logo sigma company pequeÃ±opeg.jpeg" />
   
-  <!-- Librerías para Sigma AI -->
+  <!-- LibrerÃ­as para Sigma AI -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/emoji-toolkit@11.5.0/lib/js/joypixels.min.js"></script>
   <script src="https://js.puter.com/v2/"></script>
@@ -365,10 +365,10 @@
   <!-- Header -->
   <div class="header">
     <a href="index.html" class="logo">
-      <img src="Fotos/Logo sigma company pequeñopeg.jpeg" alt="Sigma Games">
+      <img src="Fotos/Logo sigma company pequeÃ±opeg.jpeg" alt="Sigma Games">
       <span>SIGMA GAMES</span>
     </a>
-    <a href="index.html" class="home-btn">🏠 Inicio</a>
+    <a href="index.html" class="home-btn">ðŸ  Inicio</a>
   </div>
 
   <!-- Game Container -->
@@ -378,7 +378,7 @@
 
       
       <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Pantalla completa">
-        ⛶
+        â›¶
       </button>
       
       <!-- SIGMA-ADS-MIDDLE START -->
@@ -396,11 +396,11 @@
   </div>
 
   <!-- Sigma AI Logo -->
-  <div id="sigma-logo">Σ</div>
+  <div id="sigma-logo">Î£</div>
 
   <!-- Sigma AI Chatbox -->
   <div id="sigma-chatbox">
-    <div id="sigma-header">Σ Sigma AI - Save My Pet</div>
+    <div id="sigma-header">Î£ Sigma AI - Save My Pet</div>
     <div id="sigma-messages"></div>
     <div id="sigma-input-box">
       <input type="text" id="sigma-input" placeholder="Escribe un mensaje...">
@@ -444,7 +444,7 @@
       messageDiv.className = 'sigma-message ' + (isUser ? 'sigma-user-message' : 'sigma-ai-message');
       
       if (isUser) {
-        messageDiv.innerHTML = '<strong>Tú:</strong> ' + message;
+        messageDiv.innerHTML = '<strong>TÃº:</strong> ' + message;
       } else {
         let processedMessage = message;
         if (typeof joypixels !== 'undefined') {
@@ -466,18 +466,18 @@
       
       const typingDiv = document.createElement("div");
       typingDiv.className = "sigma-message sigma-ai-message";
-      typingDiv.innerHTML = "<strong>Sigma AI:</strong> <em>Escribiendo...</em> 💭";
+      typingDiv.innerHTML = "<strong>Sigma AI:</strong> <em>Escribiendo...</em> ðŸ’­";
       sigmaMessages.appendChild(typingDiv);
       sigmaMessages.scrollTop = sigmaMessages.scrollHeight;
       
       try {
         if (typeof puter === 'undefined') {
-          throw new Error('Puter SDK no está cargado');
+          throw new Error('Puter SDK no estÃ¡ cargado');
         }
         
         const response = await puter.ai.chat(msg, { 
           model: "gpt-4o-mini",
-          system_prompt: "Eres Sigma AI, un asistente inteligente especializado en Save My Pet y Sigma Games. Ayuda a los usuarios con información sobre este juego, consejos, trucos, controles y responde preguntas generales. Responde en español, usa emojis y sé amigable. Conoces todos los aspectos de House of Hazards."
+          system_prompt: "Eres Sigma AI, un asistente inteligente especializado en Save My Pet y Sigma Games. Ayuda a los usuarios con informaciÃ³n sobre este juego, consejos, trucos, controles y responde preguntas generales. Responde en espaÃ±ol, usa emojis y sÃ© amigable. Conoces todos los aspectos de House of Hazards."
         });
         
         sigmaMessages.removeChild(typingDiv);
@@ -486,7 +486,7 @@
       } catch (error) {
         console.error('Error en Sigma AI:', error);
         sigmaMessages.removeChild(typingDiv);
-        addSigmaMessage("⚠️ Lo siento, no puedo conectarme en este momento. Intenta de nuevo más tarde. 🤖");
+        addSigmaMessage("âš ï¸ Lo siento, no puedo conectarme en este momento. Intenta de nuevo mÃ¡s tarde. ðŸ¤–");
       }
       
       sigmaLogo.classList.add("pulse");
@@ -504,7 +504,7 @@
     // Welcome message
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
-        addSigmaMessage("¡Hola! 👋 Soy Sigma AI, tu asistente para House of Hazards. ¿Necesitas ayuda con controles, trucos o tienes alguna pregunta sobre el juego? 💬🎮🕹️ ✨");
+        addSigmaMessage("Â¡Hola! ðŸ‘‹ Soy Sigma AI, tu asistente para House of Hazards. Â¿Necesitas ayuda con controles, trucos o tienes alguna pregunta sobre el juego? ðŸ’¬ðŸŽ®ðŸ•¹ï¸ âœ¨");
       }, 2000);
     });
 
@@ -527,7 +527,7 @@
 <!-- SIGMA-ADS START -->
 <!-- Social follow & Ad Banner (BOTTOM) -->
 <div id="social-follow" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin:16px auto 8px;padding:6px 10px;border-radius:10px;background:#121318;border:1px solid #2a2f39;max-width:960px;">
-<span style="opacity:.9;">Síguenos:</span>
+<span style="opacity:.9;">SÃ­guenos:</span>
 <a href="https://instagram.com/sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">Instagram</a>
 <a href="https://www.youtube.com/@sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">YouTube</a>
 <a href="https://www.tiktok.com/@sigmacompanyoficial" target="_blank" rel="noopener" style="color:#e9e9e9;text-decoration:none;">TikTok</a>
@@ -545,3 +545,4 @@
 <!-- SIGMA-ADS END -->
 </body>
 </html>
+
