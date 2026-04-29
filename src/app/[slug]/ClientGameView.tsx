@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { Game } from "@/data/games";
 import { motion } from "framer-motion";
 import { Maximize, Minimize, AlertCircle } from "lucide-react";
+import AdBanner from "@/components/AdBanner";
 
 export default function ClientGameView({ game }: { game: Game }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -23,7 +24,7 @@ export default function ClientGameView({ game }: { game: Game }) {
 
   return (
     <section className="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="max-w-6xl w-full flex flex-col gap-8">
+      <div className="w-full max-w-[1400px] flex flex-col items-center gap-8">
         
         {/* Game Hero Title */}
         <motion.div 
@@ -36,49 +37,60 @@ export default function ClientGameView({ game }: { game: Game }) {
           <p className="text-primary font-medium tracking-wide">¡Listo para jugar!</p>
         </motion.div>
 
-        {/* Iframe Container */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          ref={containerRef}
-          className={`relative w-full rounded-2xl overflow-hidden glass-card shadow-[0_0_50px_rgba(30,144,255,0.1)] border border-white/10 ${
-            isFullscreen ? "h-screen rounded-none" : "aspect-video"
-          }`}
-        >
-          {/* Subtle loading background */}
-          <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center -z-10">
-            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="text-white/60 font-medium">Cargando juego...</p>
-          </div>
+        {/* Top Horizontal Ad */}
+        <AdBanner type="horizontal" className="hidden md:flex" />
 
-          <iframe
-            src={game.iframe}
-            title={game.name}
-            className="w-full h-full border-0 relative z-10 bg-black/50"
-            allow="fullscreen; autoplay; gamepad; keyboard"
-          />
+        <div className="w-full flex items-start justify-center gap-6">
+          {/* Left Vertical Ad */}
+          <AdBanner type="vertical" className="hidden xl:flex w-[160px] flex-shrink-0 sticky top-24" />
 
-          {/* Controls overlay */}
-          <div className="absolute bottom-4 right-4 z-20 flex gap-2">
-            <button 
-              onClick={toggleFullscreen}
-              className="p-3 bg-black/50 hover:bg-primary backdrop-blur-md rounded-xl text-white transition-all shadow-lg border border-white/10"
-              title="Pantalla completa"
-            >
-              {isFullscreen ? <Minimize size={24} /> : <Maximize size={24} />}
-            </button>
-          </div>
-        </motion.div>
+          {/* Iframe Container */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            ref={containerRef}
+            className={`relative w-full max-w-5xl rounded-2xl overflow-hidden glass-card shadow-[0_0_50px_rgba(30,144,255,0.1)] border border-white/10 ${
+              isFullscreen ? "h-screen max-w-none rounded-none" : "aspect-video"
+            }`}
+          >
+            {/* Subtle loading background */}
+            <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center -z-10">
+              <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+              <p className="text-white/60 font-medium">Cargando juego...</p>
+            </div>
+
+            <iframe
+              src={game.iframe}
+              title={game.name}
+              className="w-full h-full border-0 relative z-10 bg-black/50"
+              allow="fullscreen; autoplay; gamepad; keyboard"
+            />
+
+            {/* Controls overlay */}
+            <div className="absolute bottom-4 right-4 z-20 flex gap-2">
+              <button 
+                onClick={toggleFullscreen}
+                className="p-3 bg-black/50 hover:bg-primary backdrop-blur-md rounded-xl text-white transition-all shadow-lg border border-white/10"
+                title="Pantalla completa"
+              >
+                {isFullscreen ? <Minimize size={24} /> : <Maximize size={24} />}
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Right Vertical Ad */}
+          <AdBanner type="vertical" className="hidden xl:flex w-[160px] flex-shrink-0 sticky top-24" />
+        </div>
         
         {/* Ad or info banner placeholder */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="w-full p-6 glass-card rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-4 text-white/80"
+          className="w-full max-w-5xl p-6 glass-card rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-4 text-white/80"
         >
-          <div className="p-3 bg-primary/20 rounded-xl text-primary">
+          <div className="p-3 bg-primary/20 rounded-xl text-primary flex-shrink-0">
             <AlertCircle size={28} />
           </div>
           <div>
@@ -89,6 +101,9 @@ export default function ClientGameView({ game }: { game: Game }) {
           </div>
         </motion.div>
         
+        {/* Bottom Horizontal Ad */}
+        <AdBanner type="horizontal" className="hidden md:flex" />
+
       </div>
     </section>
   );
