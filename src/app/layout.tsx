@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Gamepad2 } from "lucide-react";
 import { AuthProvider } from "@/context/AuthContext";
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +54,7 @@ export default function RootLayout({
           </div>
         </footer>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );
