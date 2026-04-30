@@ -5,15 +5,71 @@ import { Game } from "@/data/games";
 import { motion } from "framer-motion";
 import { Maximize, Minimize, AlertCircle } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { ref, runTransaction } from "firebase/database";
+import { db } from "@/lib/firebase";
+import AdBanner from "@/components/AdBanner";
 
 export default function ClientGameView({ game }: { game: Game }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { addRecentGame } = useAuth();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const { addRecentGame, user, saveGameData, loadGameData } = useAuth();
 
   useEffect(() => {
     addRecentGame(game.id);
+    
+    // Incrementar contador global
+    const countRef = ref(db, `global_stats/play_counts/${game.id}`);
+    runTransaction(countRef, (currentCount) => {
+      return (currentCount || 0) + 1;
+    }).catch(console.error);
+    
   }, [game.id, addRecentGame]);
+
+  // Sincronizar localStorage del juego hacia la base de datos (Firebase)
+  useEffect(() => {
+    if (!user || !iframeRef.current) return;
+
+    const syncInterval = setInterval(async () => {
+      try {
+        const iframeWindow = iframeRef.current?.contentWindow;
+        if (iframeWindow) {
+          const ls = iframeWindow.localStorage;
+          const dataToSave: Record<string, string> = {};
+          for (let i = 0; i < ls.length; i++) {
+            const key = ls.key(i);
+            if (key) {
+              dataToSave[key] = ls.getItem(key) || "";
+            }
+          }
+          if (Object.keys(dataToSave).length > 0) {
+            await saveGameData(game.id, dataToSave);
+          }
+        }
+      } catch (err) {
+        // Si el iframe es cross-origin lanzará un DOMException por seguridad. Lo ignoramos.
+      }
+    }, 5000); // Guardado automático cada 5 segundos
+
+    return () => clearInterval(syncInterval);
+  }, [user, game.id, saveGameData]);
+
+  const handleIframeLoad = async () => {
+    if (!user || !iframeRef.current) return;
+    try {
+      // Cargar datos del juego guardados en DB y restaurarlos en el localStorage del iframe
+      const data = await loadGameData(game.id);
+      const iframeWindow = iframeRef.current.contentWindow;
+      if (iframeWindow && data) {
+        const ls = iframeWindow.localStorage;
+        Object.entries(data).forEach(([key, value]) => {
+          ls.setItem(key, value as string);
+        });
+      }
+    } catch (err) {
+      // Cross-origin error ignorable
+    }
+  };
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -42,6 +98,11 @@ export default function ClientGameView({ game }: { game: Game }) {
           <p className="text-primary font-medium tracking-wide">¡Listo para jugar!</p>
         </motion.div>
 
+        {/* Ad Horizontal Superior */}
+        <div className="w-full max-w-5xl flex justify-center hidden sm:flex">
+          <AdBanner type="horizontal" />
+        </div>
+
         <div className="w-full flex items-start justify-center gap-6">
 
           {/* Iframe Container */}
@@ -58,10 +119,12 @@ export default function ClientGameView({ game }: { game: Game }) {
             </div>
 
             <iframe
+              ref={iframeRef}
               src={game.iframe}
               title={game.name}
               className="w-full h-full border-0 relative z-10 bg-black/50"
-              allow="fullscreen; autoplay; gamepad; keyboard"
+              allow="fullscreen; autoplay; gamepad"
+              onLoad={handleIframeLoad}
             />
 
             {/* Controls overlay */}
@@ -95,7 +158,10 @@ export default function ClientGameView({ game }: { game: Game }) {
           </div>
         </motion.div>
         
-
+        {/* Ad Horizontal Inferior */}
+        <div className="w-full max-w-5xl flex justify-center pb-8 hidden sm:flex">
+          <AdBanner type="horizontal" />
+        </div>
 
       </div>
     </section>

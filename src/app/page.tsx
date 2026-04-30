@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Search, Gamepad2, ChevronDown, Sparkles } from "lucide-react";
+import { Search, Gamepad2, ChevronDown, Sparkles, Dices, Trophy } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { games } from "@/data/games";
 import GameCard from "@/components/GameCard";
+import RankingModal from "@/components/RankingModal";
 import { motion, AnimatePresence } from "framer-motion";
 import AdBanner from "@/components/AdBanner";
 import { useAuth } from "@/context/AuthContext";
@@ -12,8 +14,10 @@ import Link from "next/link";
 const INITIAL_GAMES_COUNT = 30;
 
 export default function Home() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [isAppLoading, setIsAppLoading] = useState(true);
+  const [isRankingOpen, setIsRankingOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(INITIAL_GAMES_COUNT);
   const { user, loading, loginWithGoogle, logout, recentGames } = useAuth();
 
@@ -32,6 +36,14 @@ export default function Home() {
 
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + INITIAL_GAMES_COUNT);
+  };
+
+  const handleRandomGame = () => {
+    if (games.length > 0) {
+      const randomIndex = Math.floor(Math.random() * games.length);
+      const randomGame = games[randomIndex];
+      router.push(`/${randomGame.slug}`);
+    }
   };
 
   // Reset pagination on search
@@ -179,11 +191,34 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                  className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed"
+                  className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed mb-8"
                 >
                   Juega a los mejores títulos con el catálogo más exclusivo. 
                   Diseño premium, sin interrupciones, máxima diversión.
                 </motion.p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <motion.button
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+                    onClick={handleRandomGame}
+                    className="inline-flex items-center justify-center w-full sm:w-auto gap-3 px-8 py-4 bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-500 text-white rounded-2xl font-bold text-lg transition-all shadow-[0_0_30px_rgba(30,144,255,0.4)] hover:shadow-[0_0_50px_rgba(30,144,255,0.6)] hover:-translate-y-1 group"
+                  >
+                    <Dices size={24} className="group-hover:animate-spin" />
+                    <span>Juego Aleatorio</span>
+                  </motion.button>
+
+                  <motion.button
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+                    onClick={() => setIsRankingOpen(true)}
+                    className="inline-flex items-center justify-center w-full sm:w-auto gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/10 hover:border-yellow-500/50 text-white rounded-2xl font-bold text-lg transition-all hover:shadow-[0_0_30px_rgba(234,179,8,0.3)] hover:-translate-y-1 group"
+                  >
+                    <Trophy size={24} className="text-yellow-500 group-hover:scale-110 transition-transform" />
+                    <span>Ranking</span>
+                  </motion.button>
+                </div>
               </div>
             </section>
 
@@ -285,6 +320,7 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
+      <RankingModal isOpen={isRankingOpen} onClose={() => setIsRankingOpen(false)} />
     </main>
   );
 }
