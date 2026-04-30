@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 import { Game } from "@/data/games";
 import { motion } from "framer-motion";
 import { Maximize, Minimize, AlertCircle } from "lucide-react";
-import AdBanner from "@/components/AdBanner";
 
 export default function ClientGameView({ game }: { game: Game }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -37,18 +36,10 @@ export default function ClientGameView({ game }: { game: Game }) {
           <p className="text-primary font-medium tracking-wide">¡Listo para jugar!</p>
         </motion.div>
 
-        {/* Top Horizontal Ad */}
-        <AdBanner type="horizontal" className="hidden md:flex" />
-
         <div className="w-full flex items-start justify-center gap-6">
-          {/* Left Vertical Ad */}
-          <AdBanner type="vertical" className="hidden xl:flex w-[160px] flex-shrink-0 sticky top-24" />
 
           {/* Iframe Container */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          <div 
             ref={containerRef}
             className={`relative w-full max-w-5xl rounded-2xl overflow-hidden glass-card shadow-[0_0_50px_rgba(30,144,255,0.1)] border border-white/10 ${
               isFullscreen ? "h-screen max-w-none rounded-none" : "aspect-video"
@@ -77,10 +68,7 @@ export default function ClientGameView({ game }: { game: Game }) {
                 {isFullscreen ? <Minimize size={24} /> : <Maximize size={24} />}
               </button>
             </div>
-          </motion.div>
-
-          {/* Right Vertical Ad */}
-          <AdBanner type="vertical" className="hidden xl:flex w-[160px] flex-shrink-0 sticky top-24" />
+          </div>
         </div>
         
         {/* Ad or info banner placeholder */}
@@ -101,8 +89,7 @@ export default function ClientGameView({ game }: { game: Game }) {
           </div>
         </motion.div>
         
-        {/* Bottom Horizontal Ad */}
-        <AdBanner type="horizontal" className="hidden md:flex" />
+
 
       </div>
     </section>
