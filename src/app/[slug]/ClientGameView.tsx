@@ -1,13 +1,19 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Game } from "@/data/games";
 import { motion } from "framer-motion";
 import { Maximize, Minimize, AlertCircle } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ClientGameView({ game }: { game: Game }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { addRecentGame } = useAuth();
+
+  useEffect(() => {
+    addRecentGame(game.id);
+  }, [game.id, addRecentGame]);
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {

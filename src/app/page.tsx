@@ -6,6 +6,8 @@ import { games } from "@/data/games";
 import GameCard from "@/components/GameCard";
 import { motion, AnimatePresence } from "framer-motion";
 import AdBanner from "@/components/AdBanner";
+import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
 
 const INITIAL_GAMES_COUNT = 30;
 
@@ -13,6 +15,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isAppLoading, setIsAppLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(INITIAL_GAMES_COUNT);
+  const { user, loading, loginWithGoogle, logout, recentGames } = useAuth();
 
   useEffect(() => {
     // Splash screen timer
@@ -35,6 +38,10 @@ export default function Home() {
   useEffect(() => {
     setVisibleCount(INITIAL_GAMES_COUNT);
   }, [searchTerm]);
+
+  const recentGamesData = recentGames
+    .map(id => games.find(g => g.id === id))
+    .filter(Boolean) as typeof games;
 
   return (
     <main className="min-h-screen bg-background relative overflow-hidden">
@@ -104,18 +111,45 @@ export default function Home() {
                   </div>
                 </div>
                 
-                {/* Search Bar */}
-                <div className="relative w-full sm:w-96">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-white/40" />
+                {/* Search Bar & Auth */}
+                <div className="flex items-center gap-4 w-full sm:w-auto">
+                  <div className="relative w-full sm:w-72">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Search className="h-5 w-5 text-white/40" />
+                    </div>
+                    <input
+                      type="text"
+                      className="block w-full pl-10 pr-3 py-2 border border-white/10 rounded-xl leading-5 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary focus:bg-white/10 transition-all sm:text-sm backdrop-blur-md shadow-inner"
+                      placeholder="Buscar juegos..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                   </div>
-                  <input
-                    type="text"
-                    className="block w-full pl-10 pr-3 py-3 border border-white/10 rounded-xl leading-5 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary focus:bg-white/10 transition-all sm:text-sm backdrop-blur-md shadow-inner"
-                    placeholder="Buscar entre cientos de juegos..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
+                  
+                  {!loading && (
+                    <div className="flex items-center gap-2">
+                      {user ? (
+                        <div className="flex items-center gap-2">
+                          <Link href="/profile" className="flex items-center gap-2 group">
+                            <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-colors">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img src={user.photoURL || "/logo.png"} alt="Profile" className="w-full h-full object-cover" />
+                            </div>
+                          </Link>
+                          <button onClick={logout} className="text-sm text-white/60 hover:text-red-400 transition-colors">
+                            Salir
+                          </button>
+                        </div>
+                      ) : (
+                        <Link 
+                          href="/login"
+                          className="px-4 py-2 bg-primary hover:bg-blue-600 text-white rounded-xl text-sm font-medium transition-colors shadow-lg shadow-primary/30"
+                        >
+                          Iniciar Sesión
+                        </Link>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </header>
@@ -157,6 +191,25 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <AdBanner type="horizontal" className="mb-10" />
             </div>
+
+            {/* Recent Games */}
+            {user && recentGamesData.length > 0 && !searchTerm && (
+              <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-12">
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <Sparkles size={18} className="text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Juegos Recientes</h3>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                  {recentGamesData.slice(0, 6).map((game) => (
+                    <motion.div key={`recent-${game.id}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                      <GameCard game={game} />
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Games Grid */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

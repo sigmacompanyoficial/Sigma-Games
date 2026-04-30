@@ -1,13 +1,23 @@
-import { Play } from "lucide-react";
+import { Play, Heart } from "lucide-react";
 import { Game } from "@/data/games";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 
 interface Props {
   game: Game;
 }
 
 export default function GameCard({ game }: Props) {
+  const { user, favorites, toggleFavorite } = useAuth();
+  
+  const isFavorite = favorites?.includes(game.id);
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    toggleFavorite(game.id);
+  };
+
   return (
     <Link href={`/${game.slug}`} className="block h-full outline-none">
       <motion.div 
@@ -33,6 +43,17 @@ export default function GameCard({ game }: Props) {
               <Play className="w-8 h-8 text-white ml-1 fill-white" />
             </motion.div>
           </div>
+          
+          {user && (
+            <button
+              onClick={handleFavoriteClick}
+              className="absolute top-3 right-3 z-20 p-2 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md transition-all duration-300"
+            >
+              <Heart 
+                className={`w-5 h-5 transition-colors ${isFavorite ? "fill-red-500 text-red-500" : "text-white/80 hover:text-white"}`} 
+              />
+            </button>
+          )}
         </div>
         
         <div className="p-5 flex flex-col flex-grow relative z-10 bg-gradient-to-b from-transparent to-black/40">

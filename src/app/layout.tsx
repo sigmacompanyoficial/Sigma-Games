@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Gamepad2 } from "lucide-react";
+import { AuthProvider } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,11 +23,12 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.className} min-h-screen antialiased bg-background text-foreground flex flex-col`}>
-        <div className="flex-grow">
-          {children}
-        </div>
-        
-        {/* Global Footer */}
+        <AuthProvider>
+          <div className="flex-grow">
+            {children}
+          </div>
+          
+          {/* Global Footer */}
         <footer className="border-t border-white/10 bg-black/40 backdrop-blur-md mt-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -50,6 +52,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        </AuthProvider>
       </body>
     </html>
   );
