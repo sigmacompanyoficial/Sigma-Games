@@ -4,6 +4,7 @@ export interface Game {
   name: string;
   iframe: string;
   image: string;
+  isPremium?: boolean;
 }
 
 export const games: Game[] = [
@@ -12,35 +13,40 @@ export const games: Game[] = [
     "slug": "11-11",
     "name": "11-11",
     "iframe": "https://ub-g.github.io/embed/11-11",
-    "image": "https://ub-g.github.io/uploads/2024/12/11-11-classrooom6x-unblocked-thumbnail.jpg"
+    "image": "https://ub-g.github.io/uploads/2024/12/11-11-classrooom6x-unblocked-thumbnail.jpg",
+    "isPremium": false
   },
   {
     "id": "2",
     "slug": "12-mini-battles-2",
     "name": "12 Mini Battles 2",
     "iframe": "https://ub-g.github.io/embed/12-mini-battles-2",
-    "image": "https://ub-g.github.io/uploads/2024/12/12-mini-battles-2-classrooom6x-unblocked-thumbnail.jpg"
+    "image": "https://ub-g.github.io/uploads/2024/12/12-mini-battles-2-classrooom6x-unblocked-thumbnail.jpg",
+    "isPremium": false
   },
   {
     "id": "3",
     "slug": "18-wheeler-cargo-simulator",
     "name": "18 Wheeler Cargo Simulator",
     "iframe": "https://ub-g.github.io/embed/18-wheeler-cargo-simulator",
-    "image": "https://ub-g.github.io/uploads/2024/12/18-wheeler-cargo-simulator-classrooom6x-unblocked-thumbnail.jpg"
+    "image": "https://ub-g.github.io/uploads/2024/12/18-wheeler-cargo-simulator-classrooom6x-unblocked-thumbnail.jpg",
+    "isPremium": false
   },
   {
     "id": "4",
     "slug": "2048",
     "name": "2048",
     "iframe": "https://ub-g.github.io/embed/2048",
-    "image": "https://ub-g.github.io/uploads/2024/12/2048-classrooom6x-unblocked-thumbnail.jpg"
+    "image": "https://ub-g.github.io/uploads/2024/12/2048-classrooom6x-unblocked-thumbnail.jpg",
+    "isPremium": false
   },
   {
     "id": "5",
     "slug": "2-minute-football",
     "name": "2 minute football",
     "iframe": "https://ub-g.github.io/embed/2-minute-football",
-    "image": "https://ub-g.github.io/uploads/2024/12/2-minute-football-classrooom6x-unblocked-thumbnail.jpg"
+    "image": "https://ub-g.github.io/uploads/2024/12/2-minute-football-classrooom6x-unblocked-thumbnail.jpg",
+    "isPremium": false
   },
   {
     "id": "6",

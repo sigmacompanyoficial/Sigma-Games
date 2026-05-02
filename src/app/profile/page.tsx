@@ -5,12 +5,12 @@ import { useAuth } from "@/context/AuthContext";
 import { games } from "@/data/games";
 import GameCard from "@/components/GameCard";
 import { motion } from "framer-motion";
-import { Heart, User, ArrowLeft, LogOut } from "lucide-react";
+import { Heart, User, ArrowLeft, LogOut, Gamepad2, Clock, Play } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
-  const { user, loading, favorites, logout } = useAuth();
+  const { user, loading, favorites, recentGames, stats, logout } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function ProfilePage() {
           animate={{ opacity: 1, y: 0 }}
           className="glass-card rounded-3xl p-8 flex flex-col md:flex-row items-center md:items-start gap-8 mb-16 border border-white/10"
         >
-          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_30px_rgba(30,144,255,0.3)]">
+          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_30px_rgba(30,144,255,0.3)] shrink-0">
             {user.photoURL ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
@@ -67,6 +67,18 @@ export default function ProfilePage() {
               <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
                 <Heart size={18} className="text-red-500 fill-red-500" />
                 <span className="text-white font-medium">{favorites.length} Favoritos</span>
+              </div>
+              <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
+                <Gamepad2 size={18} className="text-blue-400" />
+                <span className="text-white font-medium">{stats?.gamesPlayed || 0} Partidas</span>
+              </div>
+              <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
+                <Play size={18} className="text-green-400" />
+                <span className="text-white font-medium">{recentGames.length} Juegos Entrados</span>
+              </div>
+              <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
+                <Clock size={18} className="text-purple-400" />
+                <span className="text-white font-medium">{Math.floor((stats?.playTimeMinutes || 0) / 60)}h {(stats?.playTimeMinutes || 0) % 60}m</span>
               </div>
             </div>
           </div>

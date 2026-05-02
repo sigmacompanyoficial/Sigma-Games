@@ -1,5 +1,5 @@
 import React from "react";
-import { FileText } from "lucide-react";
+import { FileText, Gavel, AlertTriangle, Copyright, HelpCircle } from "lucide-react";
 
 export default function TermsOfUse() {
   return (
@@ -13,45 +13,55 @@ export default function TermsOfUse() {
           </div>
           <div>
             <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">Términos de Uso</h1>
-            <p className="text-primary mt-1 font-medium">Última actualización: Abril 2026</p>
+            <p className="text-primary mt-1 font-medium">Última actualización: Mayo 2026</p>
           </div>
         </div>
 
-        <div className="space-y-8 text-white/70 leading-relaxed">
+        <div className="space-y-12 text-white/70 leading-relaxed">
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">1. Aceptación de los Términos</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <Gavel className="text-primary" size={24} />
+              <h2 className="text-2xl font-bold text-white">1. Aceptación</h2>
+            </div>
             <p>
-              Al acceder y jugar en Sigma Games, aceptas estar sujeto a estos Términos de Uso, a todas las leyes y regulaciones aplicables. Si no estás de acuerdo con alguno de estos términos, tienes prohibido usar o acceder a este sitio.
+              Al acceder a Sigma Games, el usuario acepta cumplir con estos términos. El acceso a ciertos juegos premium o funciones sociales requiere la creación de una cuenta gratuita y el cumplimiento de las normas de la comunidad.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">2. Licencia de Uso</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <Copyright className="text-primary" size={24} />
+              <h2 className="text-2xl font-bold text-white">2. Propiedad Intelectual</h2>
+            </div>
             <p>
-              Se otorga permiso para jugar temporalmente los juegos alojados en la plataforma Sigma Games de manera gratuita para visualización y uso transitorio personal y no comercial.
+              Sigma Games es una plataforma de distribución de juegos. La mayoría de los títulos son propiedad de sus respectivos desarrolladores y se ofrecen mediante marcos de incrustación (iframes) autorizados. El diseño de la plataforma, logo y marca Sigma Games son propiedad exclusiva de Sigma Company.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">3. Propiedad de los Juegos</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <AlertTriangle className="text-primary" size={24} />
+              <h2 className="text-2xl font-bold text-white">3. Limitación de Responsabilidad</h2>
+            </div>
             <p>
-              La mayoría de los juegos HTML5 ofrecidos en la plataforma son incrustados y pertenecen a sus respectivos desarrolladores y creadores. Sigma Games actúa como un directorio para facilitar la experiencia de juego del usuario.
+              Sigma Games no se hace responsable de fallos técnicos en los servidores de terceros que alojan los juegos, ni de la pérdida de progreso local en caso de borrar la caché del navegador. El servicio se proporciona "tal cual" sin garantías explícitas.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">4. Conducta del Usuario</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <HelpCircle className="text-primary" size={24} />
+              <h2 className="text-2xl font-bold text-white">4. Normas del Chat</h2>
+            </div>
             <p>
-              Al usar el chat global o cualquier otra función social, te comprometes a no publicar contenido ofensivo, spam o material ilegal. Nos reservamos el derecho de bloquear cuentas que violen esta normativa.
+              Los usuarios se comprometen a mantener un ambiente respetuoso en el Chat Global. Está estrictamente prohibido el spam, el acoso o compartir contenido ilegal. Sigma Games se reserva el derecho de suspender permanentemente el acceso a cualquier usuario que viole estas normas.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-white mb-3">5. Modificaciones</h2>
-            <p>
-              Sigma Company puede revisar estos términos de servicio para su sitio web en cualquier momento sin previo aviso. Al utilizar este sitio web, aceptas estar sujeto a la versión actual de estos Términos de Uso.
-            </p>
-          </section>
+          <div className="p-6 bg-primary/10 rounded-2xl border border-primary/20 text-center">
+            <p className="text-white font-medium mb-2">¿Tienes preguntas?</p>
+            <p className="text-sm">Contáctanos en legal@sigma-games.com para cualquier consulta relacionada con estos términos.</p>
+          </div>
         </div>
       </div>
     </main>

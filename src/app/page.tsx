@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Search, Gamepad2, ChevronDown, Sparkles, Dices, Trophy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { games } from "@/data/games";
@@ -16,22 +16,47 @@ const INITIAL_GAMES_COUNT = 30;
 export default function Home() {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [isAppLoading, setIsAppLoading] = useState(true);
   const [isRankingOpen, setIsRankingOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(INITIAL_GAMES_COUNT);
   const { user, loading, loginWithGoogle, logout, recentGames } = useAuth();
 
   useEffect(() => {
-    // Splash screen timer
-    const timer = setTimeout(() => setIsAppLoading(false), 2000);
-    return () => clearTimeout(timer);
+    // Splash screen logic: skip if already shown in this session
+    const hasShownSplash = sessionStorage.getItem("sigma_splash_shown");
+    
+    if (hasShownSplash) {
+      setIsAppLoading(false);
+    } else {
+      const timer = setTimeout(() => {
+        setIsAppLoading(false);
+        sessionStorage.setItem("sigma_splash_shown", "true");
+      }, 1500); // Reduced from 2000ms
+      return () => clearTimeout(timer);
+    }
   }, []);
 
-  const filteredGames = games.filter((game) =>
-    game.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Search debouncing
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
 
-  const displayedGames = filteredGames.slice(0, visibleCount);
+  const filteredGames = useMemo(() => {
+    if (!debouncedSearchTerm) return games;
+    const lowerSearch = debouncedSearchTerm.toLowerCase();
+    return games.filter((game) =>
+      game.name.toLowerCase().includes(lowerSearch)
+    );
+  }, [debouncedSearchTerm]);
+
+  const displayedGames = useMemo(() => 
+    filteredGames.slice(0, visibleCount),
+  [filteredGames, visibleCount]);
+
   const hasMoreGames = visibleCount < filteredGames.length;
 
   const handleLoadMore = () => {
@@ -49,11 +74,13 @@ export default function Home() {
   // Reset pagination on search
   useEffect(() => {
     setVisibleCount(INITIAL_GAMES_COUNT);
-  }, [searchTerm]);
+  }, [debouncedSearchTerm]);
 
-  const recentGamesData = recentGames
-    .map(id => games.find(g => g.id === id))
-    .filter(Boolean) as typeof games;
+  const recentGamesData = useMemo(() => 
+    recentGames
+      .map(id => games.find(g => g.id === id))
+      .filter(Boolean) as typeof games,
+  [recentGames]);
 
   return (
     <main className="min-h-screen bg-background relative overflow-hidden">

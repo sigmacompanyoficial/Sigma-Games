@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Eye, Lock, Globe, Bell } from "lucide-react";
 
 export default function PrivacyPolicy() {
   return (
@@ -13,51 +13,67 @@ export default function PrivacyPolicy() {
           </div>
           <div>
             <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">Política de Privacidad</h1>
-            <p className="text-primary mt-1 font-medium">Última actualización: Abril 2026</p>
+            <p className="text-primary mt-1 font-medium">Última actualización: Mayo 2026</p>
           </div>
         </div>
 
-        <div className="space-y-8 text-white/70 leading-relaxed">
+        <div className="space-y-12 text-white/70 leading-relaxed">
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">1. Información que Recopilamos</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <Eye className="text-primary" size={24} />
+              <h2 className="text-2xl font-bold text-white">1. Recopilación de Información</h2>
+            </div>
             <p>
-              En Sigma Games recopilamos la información que proporcionas directamente al crear una cuenta, como tu dirección de correo electrónico, nombre de usuario y datos de perfil. También recopilamos información generada automáticamente durante tu uso del sitio, como estadísticas de juego, partidas recientes e interacciones con el catálogo.
+              En Sigma Games, la privacidad de nuestros usuarios es prioritaria. Recopilamos información necesaria para el funcionamiento del servicio:
             </p>
-          </section>
-
-          <section>
-            <h2 className="text-xl font-bold text-white mb-3">2. Uso de la Información</h2>
-            <p>
-              Utilizamos la información recopilada para:
-            </p>
-            <ul className="list-disc pl-5 mt-2 space-y-2">
-              <li>Proporcionar y mantener nuestro servicio de juegos en línea.</li>
-              <li>Sincronizar el progreso de tus juegos en la nube (mediante Firebase).</li>
-              <li>Personalizar tu experiencia mostrando tus juegos recientes y favoritos.</li>
-              <li>Mantener clasificaciones globales de los juegos más populares.</li>
+            <ul className="list-disc pl-6 mt-4 space-y-2">
+              <li><strong>Datos de Cuenta:</strong> Email, nombre de usuario y avatar proporcionados mediante Firebase Auth o Google OAuth.</li>
+              <li><strong>Datos de Uso:</strong> Historial de juegos recientes, favoritos y estadísticas de tiempo de juego.</li>
+              <li><strong>Información Técnica:</strong> Dirección IP, tipo de navegador y dispositivo para optimizar la carga de los juegos.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">3. Uso de Cookies</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <Globe className="text-primary" size={24} />
+              <h2 className="text-2xl font-bold text-white">2. Finalidad del Tratamiento</h2>
+            </div>
             <p>
-              Utilizamos cookies y tecnologías similares para mejorar la navegación, recordar tus sesiones iniciadas y con fines analíticos y publicitarios. Puedes gestionar las preferencias de cookies a través de la configuración de tu navegador.
+              Los datos se utilizan exclusivamente para:
+            </p>
+            <ul className="list-disc pl-6 mt-4 space-y-2">
+              <li>Sincronizar el progreso de tus juegos en múltiples dispositivos mediante Firebase Realtime Database.</li>
+              <li>Personalizar el catálogo de juegos según tus preferencias.</li>
+              <li>Mantener el chat global y las interacciones comunitarias.</li>
+              <li>Mostrar publicidad relevante mediante socios publicitarios (Google AdSense).</li>
+            </ul>
+          </section>
+
+          <section>
+            <div className="flex items-center gap-3 mb-4">
+              <Lock className="text-primary" size={24} />
+              <h2 className="text-2xl font-bold text-white">3. Seguridad y Almacenamiento</h2>
+            </div>
+            <p>
+              Toda tu información está protegida bajo los estándares de seguridad de Google Cloud Platform. Utilizamos cifrado SSL en todas las comunicaciones y no vendemos tus datos personales a terceros bajo ninguna circunstancia.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">4. Publicidad</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <Bell className="text-primary" size={24} />
+              <h2 className="text-2xl font-bold text-white">4. Derechos del Usuario</h2>
+            </div>
             <p>
-              Trabajamos con proveedores de anuncios de terceros que pueden usar cookies para mostrar publicidad relevante basándose en visitas anteriores a nuestro sitio web o a otros sitios en Internet.
+              Tienes derecho a acceder, rectificar o eliminar tus datos en cualquier momento. Puedes solicitar la eliminación de tu cuenta enviando un correo a soporte@sigma-games.com o desde la configuración de tu perfil.
             </p>
           </section>
 
-          <section>
-            <h2 className="text-xl font-bold text-white mb-3">5. Seguridad de Datos</h2>
-            <p>
-              Toda la información se almacena de forma segura usando las infraestructuras de Google Cloud y Firebase. Empleamos medidas de seguridad comercialmente aceptables para proteger tus datos personales contra accesos no autorizados.
+          <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+            <p className="text-sm italic">
+              Al utilizar Sigma Games, aceptas los términos de esta Política de Privacidad. Nos reservamos el derecho de actualizar este documento para reflejar cambios en nuestras prácticas o por requisitos legales.
             </p>
-          </section>
+          </div>
         </div>
       </div>
     </main>

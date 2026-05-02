@@ -1,4 +1,4 @@
-import { Play, Heart } from "lucide-react";
+import { Play, Heart, Lock } from "lucide-react";
 import { Game } from "@/data/games";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -12,6 +12,7 @@ export default function GameCard({ game }: Props) {
   const { user, favorites, toggleFavorite } = useAuth();
   
   const isFavorite = favorites?.includes(game.id);
+  const isPremium = game.isPremium !== false;
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -40,9 +41,19 @@ export default function GameCard({ game }: Props) {
               whileTap={{ scale: 0.9 }}
               className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center shadow-[0_0_30px_rgba(30,144,255,0.8)] backdrop-blur-md transform translate-y-4 group-hover:translate-y-0 transition-all duration-300"
             >
-              <Play className="w-8 h-8 text-white ml-1 fill-white" />
+              {isPremium && !user ? <Lock className="w-8 h-8 text-white" /> : <Play className="w-8 h-8 text-white ml-1 fill-white" />}
             </motion.div>
           </div>
+
+          {/* Premium Badge */}
+          {isPremium && (
+            <div className="absolute top-3 left-3 z-20 px-2 py-1 rounded-lg bg-primary/20 border border-primary/30 backdrop-blur-md">
+              <div className="flex items-center gap-1.5">
+                <Lock size={12} className="text-primary" />
+                <span className="text-[10px] font-bold text-white uppercase tracking-wider">Premium</span>
+              </div>
+            </div>
+          )}
           
           {user && (
             <button
@@ -60,9 +71,9 @@ export default function GameCard({ game }: Props) {
           <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-primary transition-colors duration-300">{game.name}</h3>
           
           <div className="mt-auto overflow-hidden relative">
-            <div className="w-full py-2.5 rounded-xl bg-white/10 group-hover:bg-primary text-white flex items-center justify-center gap-2 font-semibold tracking-wide transition-all duration-300 hover:shadow-[0_0_20px_rgba(30,144,255,0.4)]">
-              <Play size={18} className="fill-current" />
-              <span>Jugar Ahora</span>
+            <div className={`w-full py-2.5 rounded-xl ${isPremium && !user ? 'bg-white/5 border border-white/10' : 'bg-white/10 group-hover:bg-primary'} text-white flex items-center justify-center gap-2 font-semibold tracking-wide transition-all duration-300 hover:shadow-[0_0_20px_rgba(30,144,255,0.4)]`}>
+              {isPremium && !user ? <Lock size={18} /> : <Play size={18} className="fill-current" />}
+              <span>{isPremium && !user ? 'Desbloquear' : 'Jugar Ahora'}</span>
             </div>
           </div>
         </div>

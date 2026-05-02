@@ -1,16 +1,19 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { MessageCircle, X, Send, Lock } from "lucide-react";
+import { MessageCircle, X, Send, Lock, Crown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 import { ref, push, onValue, serverTimestamp } from "firebase/database";
 import { db } from "@/lib/firebase";
+import UserProfileModal from "./UserProfileModal";
 
 interface ChatMessage {
   id: string;
   text: string;
   email: string;
+  uid: string;
+  role?: string;
   timestamp: number;
 }
 
@@ -18,9 +21,10 @@ export default function GlobalChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const { user } = useAuth();
+  const { user, isBanned, isAdmin } = useAuth();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [selectedProfile, setSelectedProfile] = useState<{uid: string, email: string} | null>(null);
   
   useEffect(() => {
     const chatRef = ref(db, 'global_chat');
@@ -59,6 +63,12 @@ export default function GlobalChat() {
       showPremiumMessage();
       return;
     }
+
+    if (isBanned) {
+      setToastMessage("Has sido baneado y no puedes enviar mensajes.");
+      setTimeout(() => setToastMessage(null), 3000);
+      return;
+    }
     
     if (!newMessage.trim()) return;
 
@@ -67,6 +77,7 @@ export default function GlobalChat() {
       text: newMessage,
       email: user.email || 'Usuario',
       uid: user.uid,
+      role: isAdmin ? 'admin' : 'user',
       timestamp: serverTimestamp()
     });
 
@@ -113,19 +124,29 @@ export default function GlobalChat() {
               ) : (
                 messages.map((msg) => {
                   const isMe = user?.email === msg.email;
+                  const isMsgAdmin = msg.role === 'admin';
+                  
                   return (
                     <div
                       key={msg.id}
                       className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
                     >
-                      <span className="text-[10px] text-white/40 mb-1 px-1">
+                      <button 
+                        onClick={() => setSelectedProfile({ uid: msg.uid, email: msg.email })}
+                        className={`text-[10px] mb-1 px-1 flex items-center gap-1 hover:underline transition-all ${
+                          isMsgAdmin ? 'text-yellow-400 font-bold' : 'text-white/40 hover:text-white'
+                        }`}
+                      >
+                        {isMsgAdmin && <Crown size={10} className="text-yellow-400" />}
                         {msg.email.split('@')[0]}
-                      </span>
+                      </button>
                       <div
                         className={`px-3 py-2 rounded-2xl max-w-[80%] break-words text-sm ${
                           isMe
                             ? 'bg-primary text-primary-foreground rounded-tr-none'
-                            : 'bg-white/10 text-foreground rounded-tl-none'
+                            : isMsgAdmin
+                              ? 'bg-yellow-500/10 text-yellow-50 border border-yellow-500/30 rounded-tl-none shadow-[0_0_15px_rgba(234,179,8,0.15)]'
+                              : 'bg-white/10 text-foreground rounded-tl-none'
                         }`}
                       >
                         {msg.text}
@@ -192,6 +213,12 @@ export default function GlobalChat() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <UserProfileModal 
+        uid={selectedProfile?.uid || null} 
+        email={selectedProfile?.email}
+        onClose={() => setSelectedProfile(null)} 
+      />
     </>
   );
 }
