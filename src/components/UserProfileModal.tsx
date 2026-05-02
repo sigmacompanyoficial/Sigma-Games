@@ -144,7 +144,7 @@ export default function UserProfileModal({ uid, email, onClose }: UserProfileMod
                         return (
                           <Link href={`/${game.slug}`} key={game.id} onClick={onClose}>
                             <div className="flex items-center gap-3 p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 hover:border-primary/30 group">
-                              <img src={game.thumbnail} alt={game.name} className="w-10 h-10 rounded-lg object-cover" />
+                              <img src={game.image} alt={game.name} className="w-10 h-10 rounded-lg object-cover" />
                               <span className="text-sm font-medium text-white/80 group-hover:text-white transition-colors">{game.name}</span>
                             </div>
                           </Link>
